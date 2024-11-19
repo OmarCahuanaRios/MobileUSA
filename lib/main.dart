@@ -1,8 +1,7 @@
 // main.dart
 import 'package:flutter/material.dart';
 import 'package:patients/inputDNI.dart';
-import 'dart:async'; 
-import 'inputCode.dart';
+import 'dart:async';
 
 void main() {
   runApp(const MyApp());
@@ -31,9 +30,9 @@ class _PrimeraVistaState extends State<PrimeraVista> {
   @override
   void initState() {
     super.initState();
-    
-    // Retrasa la navegación a la segunda vista después de 3 segundos
-    Future.delayed(const Duration(seconds: 3), () {
+
+    // Navega inmediatamente a la segunda vista sin esperar
+    Future.delayed(Duration.zero, () {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => InputDNI()),
@@ -45,30 +44,7 @@ class _PrimeraVistaState extends State<PrimeraVista> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      body: Center(
-        
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          
-          children: [
-            const Text(
-              'SISTEMA DE RECEPCIONES',
-              style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-                color: Colors.black,
-              ),
-            ),
-            const SizedBox(height: 20),
-            Image.asset(
-              'images/golf.jpg',
-              width: 200,
-              height: 200,
-            ),
-          ],
-          
-        ),
-      ),
+      body: Center(child: CircularProgressIndicator()),  // Indicador de carga mientras se navega
     );
   }
 }

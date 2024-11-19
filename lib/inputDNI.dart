@@ -1,5 +1,3 @@
-import 'dart:convert';
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:excel/excel.dart';
@@ -34,36 +32,13 @@ class _InputDNI extends State<InputDNI> {
 
     bool found = false;
     
-   
-
     // Iterar sobre las hojas y celdas del archivo Excel buscando el nombre completo
     for (var table in excel.tables.keys) {
       for (var row in excel.tables[table]!.rows) {
-        print("RECIBIMOS");
-    print(name);
-         print("HOJA");
-        print(table);
-        // Asegúrate de que tanto el primer nombre como el apellido existen en la fila
         if (row.length > 1) { // Verificamos que la fila tenga al menos 2 celdas (nombre y apellido)
-        print("FILITA");
-        print(row[0]);
           String firstName = row[0]?.value.toString().trim() ?? ""; // Nombre en la columna A
           String lastName = row[1]?.value.toString().trim() ?? ""; // Apellido en la columna B
-
-        
-          print("PRIMER NOMBRE");
-          print(firstName);
-          print("APELLIDO");
-          print(lastName);
-          
-          // Concatenamos el nombre y el apellido
           String fullName = "$firstName $lastName";
-
-          print("SE INTENTA BUSCAR");
-          print(fullName);
-          
-
-          // Comparamos la concatenación con el nombre ingresado, ignorando mayúsculas y minúsculas
           if (fullName.toLowerCase() == name.toLowerCase()) {
             setState(() {
               _isFound = true; // Nombre encontrado
@@ -92,6 +67,13 @@ class _InputDNI extends State<InputDNI> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            // Imagen arriba de todo
+            Image.asset(
+              'images/logo.png',  // Reemplaza con la ruta de tu imagen
+              width: 300,  // Ajusta el tamaño de la imagen según tus necesidades
+              height: 100,
+            ),
+            const SizedBox(height: 40), // Espacio entre la imagen y el siguiente texto
             const Text(
               'Welcome to Social Capital - Cultivando Talento event, hosted by the Latin American Chamber of Commerce of Charlotte!',
               style: TextStyle(
@@ -100,11 +82,11 @@ class _InputDNI extends State<InputDNI> {
                 color: Colors.white,
               ),
             ),
-            const SizedBox(height: 40), 
+            const SizedBox(height: 20), 
             const Text(
               'Please type your name to check in',
               style: TextStyle(
-                fontSize: 20,
+                fontSize: 12,
                 fontWeight: FontWeight.bold,
                 color: Colors.white,
               ),
@@ -120,7 +102,7 @@ class _InputDNI extends State<InputDNI> {
                   LengthLimitingTextInputFormatter(30), 
                 ],
                 decoration: InputDecoration(
-                  labelText: 'Name',  
+                  labelText: 'name',  
                   labelStyle: const TextStyle(color: Colors.white),
                   enabledBorder: OutlineInputBorder(
                     borderSide: BorderSide(color: Colors.white.withOpacity(0.5)),
@@ -151,7 +133,7 @@ class _InputDNI extends State<InputDNI> {
                   // Si no se encuentra, mostrar pantalla de adiós
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => const InputDNI()),
+                    MaterialPageRoute(builder: (context) => const ByeUserScreen()),
                   );
                 }
               },
@@ -166,7 +148,7 @@ class _InputDNI extends State<InputDNI> {
                 );
               },
               child: const Text(
-                'Not registered yet?',
+                'Would you like to register?',
                 style: TextStyle(
                   color: Colors.blue,
                   decoration: TextDecoration.underline,
